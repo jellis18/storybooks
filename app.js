@@ -16,6 +16,7 @@ dotenv.config({ path: "./config/config.env" });
 // Passport Config
 require("./config/passport")(passport);
 
+console.log("Before database");
 connectDB();
 
 // init app

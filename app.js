@@ -16,7 +16,6 @@ dotenv.config({ path: "./config/config.env" });
 // Passport Config
 require("./config/passport")(passport);
 
-console.log("Before database");
 connectDB();
 
 // init app
@@ -39,8 +38,12 @@ app.use(
 );
 
 // set up morgan if in development mode
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV != "production") {
+  const nodeEnv = "development";
+  console.log("Using morgan for logging");
   app.use(morgan("dev"));
+} else {
+  const nodeEnv = "production";
 }
 
 // Handlebars helpers
@@ -98,7 +101,4 @@ app.use("/auth", require("./routes/auth"));
 app.use("/stories", require("./routes/stories"));
 
 const PORT = process.env.PORT || 3000;
-app.listen(
-  PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-);
+app.listen(PORT, console.log(`Server running on port ${PORT}`));
